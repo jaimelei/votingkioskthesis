@@ -1,0 +1,141 @@
+-- Admin Table
+CREATE TABLE `admin` (
+    `username` varchar(50) NOT NULL,
+    `password_hash` text NOT NULL,
+    PRIMARY KEY (`username`)
+);
+
+
+
+INSERT INTO admin (username, password_hash)
+VALUES ('admin', '$2a$10$QaWZj8sECFtz9kkw5rtNiOwzRiiok.k.d.2TJd7YwOCS4jYJFq9bC');
+
+
+
+-- Candidates Table
+CREATE TABLE `candidates` (
+    `position_name` varchar(355) NOT NULL,
+    `name` varchar(255) NOT NULL,
+    `position` varchar(100) NOT NULL,
+    `year_level` varchar(20) DEFAULT NULL,
+    `program` varchar(100) DEFAULT NULL,
+    `credentials` json DEFAULT NULL,
+    `photo_url` varchar(255) DEFAULT NULL,
+    `partylist` varchar(50) NOT NULL,
+    PRIMARY KEY (`position_name`)
+);
+
+
+
+INSERT INTO candidates (position_name, name, position, year_level, program, partylist, credentials, photo_url) VALUES
+('BM (BEED)_Ahyeon', 'Ahyeon', 'BM (BEED)', '2nd Year', 'BS Political Science', 'South Party', '["Leader of Babymonster", "Rapper"]', '/uploads/ahyeon.jpg'),
+('BM (BEED)_Haram', 'Haram', 'BM (BEED)', '2nd Year', 'BS Sociology', 'Korea Party', '["Main Vocalist of Babymonster", "Songwriter"]', '/uploads/haram.jpg'),
+('BM (BIT)_Chiquita', 'Chiquita', 'BM (BIT)', '1st Year', 'BS Biology', 'Korea Party', '["Maknae of Babymonster", "Dancer"]', '/uploads/chiquita.jpg'),
+('BM (BIT)_Pharita', 'Pharita', 'BM (BIT)', '1st Year', 'BS Environmental Science', 'South Party', '["Vocalist of Babymonster", "Animal Lover"]', '/uploads/pharita.jpg'),
+('BM (BPED-BTLED-BTVDED)_Rora', 'Rora', 'BM (BPED-BTLED-BTVDED)', '1st Year', 'BS History', 'South Party', '["Lead Dancer of Babymonster", "Actress"]', '/uploads/rora.jpg'),
+('BM (BPED-BTLED-BTVDED)_Ruka', 'Ruka', 'BM (BPED-BTLED-BTVDED)', '1st Year', 'BS Philosophy', 'Korea Party', '["Main Dancer of Babymonster", "Choreographer"]', '/uploads/ruka.jpg'),
+('BM (BSED)_Danielle', 'Danielle', 'BM (BSED)', '3rd Year', 'BS Journalism', 'Korea Party', '["Lead Dancer of NewJeans", "Bilingual"]', '/uploads/danielle.jpg'),
+('BM (BSED)_Rosé', 'Rosé', 'BM (BSED)', '4th Year', 'BS Music', 'South Party', '["Main Vocalist of Blackpink", "Guitarist"]', '/uploads/rose.jpg'),
+('BM (BSIT)_Hyein', 'Hyein', 'BM (BSIT)', '1st Year', 'BS Literature', 'South Party', '["Maknae of NewJeans", "Singer"]', '/uploads/hyein.jpg'),
+('BM (BSIT)_Yujin', 'Yujin', 'BM (BSIT)', '2nd Year', 'BS Mathematics', 'Korea Party', '["Leader of IVE", "All-Rounder"]', '/uploads/yujin.jpg'),
+('BM (CBA)_Haerin', 'Haerin', 'BM (CBA)', '3rd Year', 'BS Economics', 'Korea Party', '["Lead Vocalist of NewJeans", "Cat Lover"]', '/uploads/haerin.jpg'),
+('BM (CBA)_Lisa', 'Lisa', 'BM (CBA)', '4th Year', 'BS Accounting', 'South Party', '["Main Dancer of Blackpink", "Global Ambassador"]', '/uploads/lisa.jpg'),
+('BM (COE)_Hyein', 'Hyein', 'BM (COE)', '1st Year', 'BS Literature', 'Korea Party', '["Maknae of NewJeans", "Singer"]', '/uploads/hyein.jpg'),
+('BM (COE)_Wonyoung', 'Wonyoung', 'BM (COE)', '2nd Year', 'BS Statistics', 'South Party', '["Visual of IVE", "Center"]', '/uploads/wonyoung.jpg'),
+('Governor_Jisoo', 'Jisoo', 'Governor', '4th Year', 'BS Computer Science', 'South Party', '["Leader of Blackpink", "Global Ambassador"]', '/uploads/jisoo.jpg'),
+('Governor_Minji', 'Minji', 'Governor', '3rd Year', 'BS Business Administration', 'Korea Party', '["Leader of NewJeans", "Dance Captain"]', '/uploads/minji.jpg'),
+('Vice Governor_Hanni', 'Hanni', 'Vice Governor', '3rd Year', 'BS Communication', 'Korea Party', '["Main Vocalist of NewJeans", "Multilingual"]', '/uploads/hanni.jpg'),
+('Vice Governor_Kim Jennie', 'Kim Jennie', 'Vice Governor', '4th Year', 'BS Psychology', 'South Party', '["Main Rapper of Blackpink", "Fashion Icon"]', '/uploads/jennie.jpg');
+
+
+
+-- Election Settings Table
+CREATE TABLE `election_settings` (
+    `voting_start` datetime NOT NULL,
+    `voting_end` datetime NOT NULL,
+    `is_active` tinyint(1) DEFAULT 1,
+    `id` int NOT NULL DEFAULT 1,
+    PRIMARY KEY (`id`)
+);
+
+
+
+-- For election settings, set in admin
+
+
+
+-- Voters Table
+CREATE TABLE `voters` (
+    `fingerprint_hash` varchar(64) NOT NULL,
+    `student_name` varchar(255) NOT NULL,
+    `student_id` varchar(50) NOT NULL,
+    `program` varchar(100) NOT NULL,
+    `has_voted` tinyint(1) DEFAULT 0,
+    PRIMARY KEY (`fingerprint_hash`),
+    UNIQUE KEY `student_id` (`student_id`)
+);
+
+
+
+INSERT INTO voters (fingerprint_hash, student_name, student_id, program, has_voted) VALUES ('randomhashplaceholders', 'Seol Yoona', '2021102615', 'Bachelor of Science in Computer Engineering', true),
+('randomhashplaceholder', 'Tanaka Anna', '2021102614', 'Bachelor of Science in Computer Engineering', false);
+
+
+
+-- Votes Table
+CREATE TABLE `votes` (
+    `position_name` varchar(355) NOT NULL,
+    `name` varchar(255) DEFAULT NULL,
+    `position` varchar(255) NOT NULL DEFAULT 'Unknown',
+    `coe_votes` int DEFAULT 0,
+    `cba_votes` int DEFAULT 0,
+    `cics_votes` int DEFAULT 0,
+    `cit_votes` int DEFAULT 0,
+    `coed_bsed` int DEFAULT 0,
+    `coed_beed` int DEFAULT 0,
+    `coed_bped` int DEFAULT 0,
+    `coed_votes` int GENERATED ALWAYS AS (`coed_bsed` + `coed_beed` + `coed_bped`) STORED,
+    `total_votes` int GENERATED ALWAYS AS (`coe_votes` + `cba_votes` + `cics_votes` + `cit_votes` + `coed_votes`) STORED,
+    PRIMARY KEY (`position_name`),
+    CONSTRAINT `votes_ibfk_1` FOREIGN KEY (`position_name`) REFERENCES `candidates` (`position_name`)
+);
+
+
+
+-- Insert votes into the votes table
+INSERT INTO `votes` (`position_name`, `name`, `position`, `coe_votes`, `cba_votes`, `cics_votes`, `cit_votes`, `coed_bsed`, `coed_beed`, `coed_bped`) VALUES
+-- Governor Votes
+('Governor_Jisoo', 'Jisoo', 'Governor', 100, 50, 75, 60, 20, 30, 10),
+('Governor_Minji', 'Minji', 'Governor', 80, 70, 65, 55, 25, 35, 15),
+
+-- Vice Governor Votes
+('Vice Governor_Kim Jennie', 'Kim Jennie', 'Vice Governor', 90, 60, 70, 65, 15, 25, 10),
+('Vice Governor_Hanni', 'Hanni', 'Vice Governor', 85, 75, 80, 70, 20, 30, 15),
+
+-- BM (BEED) Votes
+('BM (BEED)_Ahyeon', 'Ahyeon', 'BM (BEED)', 50, 40, 60, 55, 10, 15, 5),
+('BM (BEED)_Haram', 'Haram', 'BM (BEED)', 55, 45, 65, 60, 15, 20, 10),
+
+-- BM (BPED-BTLED-BTVDED) Votes
+('BM (BPED-BTLED-BTVDED)_Rora', 'Rora', 'BM (BPED-BTLED-BTVDED)', 60, 50, 70, 65, 20, 25, 15),
+('BM (BPED-BTLED-BTVDED)_Ruka', 'Ruka', 'BM (BPED-BTLED-BTVDED)', 65, 55, 75, 70, 25, 30, 20),
+
+-- BM (BIT) Votes
+('BM (BIT)_Pharita', 'Pharita', 'BM (BIT)', 70, 60, 80, 75, 30, 35, 25),
+('BM (BIT)_Chiquita', 'Chiquita', 'BM (BIT)', 75, 65, 85, 80, 35, 40, 30),
+
+-- BM (BSIT) Votes
+('BM (BSIT)_Hyein', 'Hyein', 'BM (BSIT)', 80, 70, 90, 85, 40, 45, 35),
+('BM (BSIT)_Yujin', 'Yujin', 'BM (BSIT)', 85, 75, 95, 90, 45, 50, 40),
+
+-- BM (BSED) Votes
+('BM (BSED)_Rosé', 'Rosé', 'BM (BSED)', 95, 55, 80, 70, 10, 20, 5),
+('BM (BSED)_Danielle', 'Danielle', 'BM (BSED)', 88, 65, 75, 60, 15, 25, 10),
+
+-- BM (CBA) Votes
+('BM (CBA)_Lisa', 'Lisa', 'BM (CBA)', 100, 70, 85, 75, 20, 30, 15),
+('BM (CBA)_Haerin', 'Haerin', 'BM (CBA)', 92, 80, 90, 80, 25, 35, 20),
+
+-- BM (COE) Votes
+('BM (COE)_Wonyoung', 'Wonyoung', 'BM (COE)', 110, 60, 95, 85, 30, 40, 25),
+('BM (COE)_Hyein', 'Hyein', 'BM (COE)', 105, 75, 100, 90, 35, 45, 30);

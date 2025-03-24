@@ -1,0 +1,197 @@
+@font-face {
+    font-family: 'Montserrat';
+    src: url('../../public/fonts/Montserrat/static/Montserrat-ExtraLight.ttf') format('truetype');
+    font-weight: 200;
+    font-style: normal;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;  /* Ensures left and right sections are apart */
+    align-items: center;
+    background-color: #202020;
+    padding: 10px 40px;
+    height: 50px;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Adjust spacing between links */
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.logo-placeholder {
+    font-weight: bold;
+    font-size: 18px;
+    color: white;
+    margin-right: 10px;
+}
+
+.nav-link {
+    margin: 0 10px;
+    text-decoration: none;
+    color: white;
+    font-family: 'Montserrat';
+    font-size: 25px;
+    font-weight: 200;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0;
+    height: 2px;
+    background-color: white;
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+    margin-left: auto; /* Pushes it to the right */
+    gap: 20px;
+}
+
+.admin-text {
+    margin-right: 40px;
+    font-size: 20px;
+    color: white;
+    font-family: 'Montserrat';
+    font-weight: 200;
+}
+
+.logout-button {
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-family: 'Montserrat';
+    font-size: 25px;
+    font-weight: 200;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.mobile-admin {
+    display: none;
+}
+
+.desktop-only {
+    display: flex;
+}
+
+/* Hamburger Menu Button */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.bar {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    margin: 4px 0;
+    transition: 0.3s;
+}
+
+/* Hamburger Open Animation */
+.bar.open:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+}
+
+.bar.open:nth-child(2) {
+    opacity: 0;
+}
+
+.bar.open:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* ===== Mobile Responsive Styles ===== */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column; /* Stack items vertically */
+        align-items: center;
+        padding: 10px 20px;
+        height: auto; /* Allow height to adjust */
+    }
+
+    .mobile-admin {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    /* Hide the right-side admin section in mobile */
+    .desktop-only {
+        display: none;
+    }
+
+    .admin-text {
+        display: none;
+    }
+
+    .hamburger {
+        display: flex; /* Show hamburger icon */
+    }
+
+    /* Hide navbar links by default */
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 50px;
+        left: 0;
+        width: 100%;
+        background-color: #202020;
+        text-align: center;
+        padding: 15px 0;
+    }
+
+    /* Show navbar links when menu is open */
+    .nav-links.show {
+        display: flex;
+    }
+
+    .nav-link {
+        padding: 10px 0;
+        font-size: 20px;
+        margin: 0;
+    }
+
+    .navbar-left {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .navbar-right {
+        display: none; /* Hide admin text on small screens */
+    }
+
+    .nav-links.show .nav-link {
+        text-decoration: none;  /* Remove underline */
+        color: white !important; /* Ensure it's white */
+        font-size: 20px;
+        font-weight: 200;
+        font-family: 'Montserrat';
+        transition: none; /* Prevent hover effects */
+    }
+    
+}

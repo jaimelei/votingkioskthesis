@@ -1,0 +1,51 @@
+# Routes Config
+#
+# This file defines all application routes (Higher priority routes first)
+#
+
+module:testrunner
+# module:jobs
+
+
+GET     /                                       App.Index
+
+# Ignore favicon requests
+GET     /favicon.ico                            404
+
+# Map static resources from the /app/public folder to the /public path
+GET     /public/*filepath                       Static.Serve("public")
+
+# Catch all, this will route any request into the controller path
+#
+#                    **** WARNING ****
+# Enabling this exposes any controller and function to the web.
+# ** This is a serious security issue if used online **
+#
+# For rapid development uncomment the following to add new controller.action endpoints
+# without having to add them to the routes table.
+# *       /:controller/:action                    :controller.:action
+
+
+
+GET /backup/*filepath Static.Serve("backup")
+
+# API Routes
+GET         /api/get-total-votes/:position_name                             LiveVotesController.GetTotalVotes
+GET         /api/get-department-votes/:position_name/:department            LiveVotesController.GetDepartmentVotes
+GET         /api/get-all-candidates                                         CandidatesController.GetAllCandidates
+GET         /api/first-password                                             AdminController.FirstPassword
+GET         /api/get-election-status                                        VotingController.GetElectionStatus
+GET         /api/get-backup-list                                            AdminController.GetBackupList
+GET         /api/get-voter/:student_id                                      VotingController.GetVoter
+
+
+POST        /api/post-vote                                                  VotingController.PostVote
+POST        /api/post-voting-timeframe                                      AdminController.PostVotingTimeframe
+POST        /api/change-password                                            AdminController.ChangePassword
+POST        /api/signin                                                     SigninController.SignIn
+POST        /api/post-candidates                                            AdminController.PostCandidates
+POST        /api/upload-candidate-photo                                     AdminController.UploadCandidatePhoto
+POST        /api/post-credentials                                           AdminController.PostCredentials
+POST        /api/generate-backup                                            AdminController.GenerateBackup
+
+DELETE      /api/reset-elections                                            AdminController.ResetElections

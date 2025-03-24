@@ -1,0 +1,316 @@
+/* ===== General Layout ===== */
+.livevotes-container {
+  display: flex;
+  height: 100vh;
+  background-color: #f9f9f9;
+}
+
+/* ===== Sidebar Styles ===== */
+.livevotes-sidebar {
+    background-color: #4f4b23;
+    color: white;
+    padding: 20px;
+    width: 290px;
+  }
+
+.livevotes-sidebar-title {
+    font-size: 4.5rem;
+    margin: 0 20px 0 0;
+    font-family: 'Caveat';
+    font-weight: bold;
+    padding: 20px 0 10px 10px;
+}
+
+.livevotes-sidebar-menu {
+    list-style: none;
+    padding: 0;
+}
+
+.livevotes-menu-item {
+    padding: 12px;
+    cursor: pointer;
+    font-size: 1.4rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    border-radius: 15px;
+    margin-bottom: 5px;
+    transition: background 0.3s ease;
+  }
+
+  .livevotes-menu-item:hover {
+    background-color: #706f3d;
+    border-radius: 5px;
+  }
+
+  .livevotes-menu-item-open {
+    padding: 12px;
+    cursor: pointer;
+    font-size: 1.4rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    border-radius: 15px;
+    margin-bottom: 5px;
+    transition: background 0.3s ease;
+  }
+
+  .livevotes-active-tab {
+    background: #706f3d;
+    font-weight: bold;
+  }
+
+  .livevotes-dropdown {
+    list-style: none;
+    padding-left: 15px;
+  }
+
+/* ===== Main Content ===== */
+.livevotes-content {
+    background-color: #8d8753;
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 30px 100px 30px;
+}
+
+.livevotes-content-title {
+  font-size: 3rem;
+  font-family: Montserrat;
+  font-weight: bold;
+  margin: 0 0 20px 0;
+}
+
+/* ===== View Toggle Buttons ===== */
+.view-toggle-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.view-toggle-buttons button {
+  padding: 10px 15px;
+  font-size: 17px;
+  border: none;
+  background: #dcdcdc;
+  color: #333;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: 0.2s;
+  font-family: Montserrat;
+  font-weight: 400;
+}
+
+.view-toggle-buttons button:hover {
+  background: #b2b3b3;
+}
+
+.active-view {
+  background: #727272 !important;
+  color: #fff;
+  font-weight: bold;
+}
+
+/* ===== Graphs ===== */
+.graph-container {
+    background-color: #F2DD6C;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+    width: 90%;
+    height: 75%;
+}
+
+.bar-graph {
+    max-width: 800px;
+    max-height: 500px;
+    border: 2px solid black;
+    background-color: white;
+}
+
+.bar-graphs {
+  max-width: 1100px;
+  max-height: 500px;
+  border: 2px solid black;
+  background-color: white;
+}
+
+/* Pie Chart Layout */
+.pie-charts {
+    display: flex;
+    gap: 75px;
+    flex-wrap: wrap;
+    justify-content: center;
+    background-color: white;
+    width: 1100px;
+    height: 500px;
+    border: 2px solid black;
+}
+
+.pie-chart {
+  width: 50%;
+  background-color: white;
+}
+
+.pie-chart-container {
+  flex: 1 1 100px; /* Allow flexible resizing */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-height: 450px;
+}
+
+.pie-charts canvas {
+  max-width: none;
+  max-height: none;
+  width: 300px; /* Increase width */
+  height: 300px; /* Increase height */
+}
+
+.candidate-name {
+  font-weight: 400;
+  margin-top: 8px;
+  font-size: 1.2em;
+  font-family: Montserrat;
+}
+
+/* Department Dropdown */
+.graph-container select {
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+/* Responsive Design */
+/* ===== Responsive Design ===== */
+@media (max-width: 600px) {
+  .livevotes-content {
+    overflow-y: auto;
+  }
+  
+  .livevotes-container {
+    flex-direction: column;
+  }
+
+  /* Sidebar becomes a bottom navigation bar */
+  .livevotes-sidebar {
+    width: 100%;
+    max-width: 100vw; /* Prevents it from expanding past the viewport */
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start; /* Aligns menu items from the left */
+    padding: 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 9999;
+}
+
+  /* Hide the sidebar title */
+  .livevotes-sidebar-title {
+    display: none;
+  }
+
+  /* Make menu items scroll horizontally */
+  .livevotes-sidebar-menu {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 10px; /* Space between items */
+    margin: 0;
+    padding: 0 15px;
+    width: max-content;
+}
+
+.livevotes-menu-item {
+  flex-shrink: 0; /* Prevents shrinking */
+  font-size: 0.9rem;
+  padding: 8px 3px;
+  text-align: center;
+  margin: 8px 0
+}
+
+  .livevotes-menu-item,
+  .livevotes-menu-item-open {
+    font-size: 1rem;
+    padding: 5px 15px;
+    flex-shrink: 0; /* Prevents items from shrinking */
+  }
+
+  /* Content adapts to the new layout */
+  .livevotes-content {
+    padding-top: 10px;
+    padding-bottom: 190px; /* Extra padding to prevent overlap with the bottom sidebar */
+  }
+
+  .livevotes-content-title {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  /* Adjust graphs */
+  .graph-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+    padding: 10px;
+    height: auto;
+  }
+
+  .bar-graph {
+    width: 150px;
+    height: 250px;
+    border: 2px solid black;
+    background-color: white;
+  }
+
+  .bar-graphs {
+    max-width: 100%;
+    max-height: 300px;
+  }
+
+/* Pie Chart Layout */
+.pie-charts {
+  display: flex;
+  gap: 45px;
+  flex-wrap: wrap;
+  justify-content: center;
+  background-color: white;
+  width: 100%;
+  height: auto;
+  border: 2px solid black;
+}
+
+.pie-chart-container {
+display: flex;
+flex-direction: column;
+align-items: center;
+max-height: 300px;
+max-width: 90%;
+}
+
+  /* Button adjustments */
+  .view-toggle-buttons {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .view-toggle-buttons button {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+
+  .livevotes-active-tab {
+    background: #706f3d;
+    font-weight: bold;
+    padding-bottom: 0;
+  }
+}

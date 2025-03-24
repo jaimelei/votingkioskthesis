@@ -1,0 +1,270 @@
+/* Election Banner */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.floating-box {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.vote-button {
+  background-color: #727272;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  font-size: 24px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-family: Montserrat;
+  font-weight: 400;
+}
+
+.vote-button:hover {
+  background-color: #797878;
+}
+
+/* Scan Page */
+.scan-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  justify-content: center;
+  position: relative;
+}
+
+.fingerprint-img {
+  width: 200px;
+}
+
+.scan-text {
+  font-size: 20px;
+  margin-top: 10px;
+}
+
+.scan-button {
+  background-color: #727272;
+  color: white;
+  border: none;
+  padding: 20px 40px;
+  font-size: 24px;
+  border-radius: 5px;
+  cursor: pointer;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  font-family: Montserrat;
+  font-weight: 400;
+}
+
+.scan-button:hover {
+  background-color: #797878;
+}
+
+/* Voting Pages */
+.governor-container {
+  text-align: center;
+  padding: 20px;
+}
+
+.governor-title {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.governor-content {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.candidate {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 250px;
+}
+
+.candidate-img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Voting Controls */
+.voting-controls {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  padding: 0 20px;
+}
+
+.previous-button {
+  background-color: #727272;
+  color: white;
+  padding: 20px 40px;
+  font-size: 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  position:absolute;
+  left: 60px;
+  bottom: 20px;
+  font-family: Montserrat;
+	font-weight: 400;
+}
+
+.abstain-button {
+  background-color: #727272;
+  color: white;
+  padding: 20px 40px;
+  font-size: 20px;
+  border-radius: 5px;
+  cursor: pointer;   
+  position: absolute;
+  right: 80px; /* Move to the right side */
+  bottom: 20px;
+  font-family: Montserrat;
+	font-weight: 400;
+}
+
+/* Summary Popup */
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-content {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  width: 400px;
+}
+
+.popup-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.cancel-button {
+  background-color: #d6d6d6;
+  color: white;
+  padding: 20px 40px;
+  font-size: 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: Montserrat;
+	font-weight: 400;
+}
+
+.submit-button {
+  background-color: #727272;
+  color: white;
+  padding: 20px 40px;
+  font-size: 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: Montserrat;
+	font-weight: 400;
+}
+
+/* Completed Page */
+.completed-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.done-button {
+  background-color: #727272;
+  color: white;
+  padding: 20px 40px;
+  font-size: 24px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+  font-family: Montserrat;
+	font-weight: 400;
+}
+
+/* Student ID Page */
+.student-id-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f8f9fa;
+}
+
+.student-id-box {
+  background: white;
+  padding: 30px 50px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 400px;
+}
+
+.student-id-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.student-id-input {
+  width: 90%;
+  padding: 15px;
+  font-size: 18px;
+  margin: 10px 0;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  outline: none;
+}
+
+.student-id-input:focus {
+  border-color: #727272;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.proceed-button {
+  background-color: #727272;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  font-size: 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 15px;
+  width: 100%;
+  font-family: Montserrat;
+  font-weight: 400;
+}
+
+.proceed-button:hover {
+  background-color: #797878;
+}

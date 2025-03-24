@@ -1,0 +1,68 @@
+.candidacy-container {
+    background-color: #f2f2f2;
+    border-radius: 10px;
+    padding: 20px;
+    width: 90%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    }
+    
+    .preview-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr 2fr;
+    gap: 10px;
+    text-align: center;
+    }
+    
+    .grid-header {
+    font-weight: bold;
+    font-size: 18px;
+    padding: 10px 0;
+    border-bottom: 2px solid #000;
+    }
+    
+    .grid-item {
+    padding: 10px;
+    border-bottom: 1px solid #6d6d6d;
+    display: flex;
+    flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .grid-item-position {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-bottom: 1px solid #6d6d6d;
+        }
+    
+    .position {
+    font-weight: bold;
+    font-size: 16px;
+    }
+    
+    .grid-item .candidate-credentials {
+        text-align: center;
+        display: block;  /* Important to make sure it's not affected by flex/grid shenanigans */
+        list-style-position: inside;
+        margin: 5px 0;
+    }
+
+    .candidate-credentials {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Centers everything */
+        justify-content: center;
+        list-style-type: none; /* Removes bullet points */
+        padding: 0;
+        margin: 0;
+        font-size: 1rem;
+        color: #333;
+    }
+    
+    .candidate-credentials li {
+        margin-bottom: 0.25rem;
+        line-height: 1.3;
+    }    
+    
