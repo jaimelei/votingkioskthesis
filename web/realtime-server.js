@@ -9,9 +9,9 @@ const WEBSOCKET_URL = process.env.REACT_APP_WEBSOCKET_URL;
 // 1. MySQL connection pool
 const db = mysql.createPool({
   host: "localhost",
-  user: "root", // change this
-  password: "!Database123", // change this
-  database: "voting_kiosk_db", // change this
+  user: "root",
+  password: "!Database123",
+  database: "voting_kiosk_db",
   port: 3306,
 });
 
