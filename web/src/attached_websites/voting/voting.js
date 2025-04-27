@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
+import ScanPage from "./scan-page";
 import "./voting.css";
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:9000';
+const API_URL = process.env.REACT_APP_API_URL;
 
 const fetchCandidates = async () => {
   try {
@@ -55,59 +56,6 @@ const ElectionBanner = ({ onVote }) => (
   </div>
 );
 
-const StudentIDPage = ({ onSubmit }) => {
-  const [studentId, setStudentId] = useState("");
-  const [error, setError] = useState("");
-
-  const handleSubmit = async (e) => {
-      e.preventDefault();
-      setError(""); // clear previous errors
-
-      try {
-          const voterInfo = await fetchVoterInfo(studentId);
-          onSubmit(studentId, voterInfo);
-      } catch (err) {
-          setError(err.message);
-      }
-  };
-
-  return (
-      <div className="student-id-container">
-          <div className="student-id-box">
-              <h2>Enter Student ID</h2>
-              <form onSubmit={handleSubmit}>
-                  <input
-                      type="text"
-                      placeholder="Student ID"
-                      value={studentId}
-                      onChange={(e) => setStudentId(e.target.value)}
-                      className="student-id-input"
-                      required
-                  />
-                  <button type="submit" className="proceed-button">Proceed</button>
-              </form>
-              {error && <p className="error-message">{error}</p>}
-          </div>
-      </div>
-  );
-};
-
-const ScanPage = ({ onScan }) => (
-  <div className="scan-container">
-    <div className="scan-content">
-      <img
-        src="/images/fingerprint.jpg"
-        alt="Fingerprint"
-        className="fingerprint-img large"
-      />
-      <p className="scan-text">Please scan your right thumb to proceed</p>
-    </div>
-    <button className="scan-button large-button bottom-right" onClick={onScan}>
-      Scan Now
-    </button>
-  </div>
-);
-
 const ScanPopup = ({ voterInfo, onNext }) => (
   <div className="popup">
     <div className="popup-content">
@@ -127,7 +75,7 @@ const ScanPopup = ({ voterInfo, onNext }) => (
 const VotingPage = ({ title, candidates, onVote, onBack, showControls }) => (
   <div className="governor-container">
       <h1 className="governor-title">{title}</h1>
-      <div className="governor-content two-column-layout">
+      <div className="governor-contents">
           {candidates.map((candidate, index) => (
               <div key={index} className={`candidate candidate-${index === 0 ? "left" : "right"}`}>
                   <img src={`/uploads/${candidate.photo_url}`} alt={candidate.name} className="candidate-img larger" />
@@ -223,6 +171,7 @@ function Voting() {
   const [isLoading, setIsLoading] = useState(true);
   const [studentID, setStudentID] = useState("");
   const [voterInfo, setVoterInfo] = useState(null);
+  const [studentInfo, setStudentInfo] = useState(null);
 
   useEffect(() => {
     fetchCandidates().then(setCandidates).catch(console.error).finally(() => setIsLoading(false));
@@ -248,6 +197,17 @@ function Voting() {
     setStudentID(id);
     setVoterInfo(info);
     setPage("scan");
+  };
+
+  // Handle Scan directly without fetching again
+  const handleScan = (infoFromScan) => {
+    if (infoFromScan.has_voted) {
+      alert("You have already voted.");
+      setPage("scan");
+    } else {
+      setStudentInfo(infoFromScan);
+      setPage("governor");
+    }
   };
 
   const handleVote = (position, name) => {
@@ -286,6 +246,7 @@ function Voting() {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
+              "Ngrok-Skip-Browser-Warning": "true"
           },
           body: JSON.stringify(payload),
       });
@@ -325,18 +286,8 @@ function Voting() {
 
   return (
     <div className="app-container white-background">
-      {page === "home" && <ElectionBanner onVote={() => setPage("student-id")} />}
-      {page === "student-id" && <StudentIDPage onSubmit={handleStudentIDSubmit} />}
-      {page === "scan" && <ScanPage onScan={() => setShowPopup(true)} />}
-      {showPopup && page === "scan" && (
-      <ScanPopup
-        voterInfo={voterInfo}
-        onNext={() => {
-          setShowPopup(false);
-          setPage("governor");
-        }}
-      />
-      )}
+      {page === "home" && <ElectionBanner onVote={() => setPage("qr-scan")} />}
+      {page === "qr-scan" && <ScanPage onScan={handleScan} onBack={() => setPage("governor")} />}
       {page === "governor" && (
         <VotingPage
           title="Governor"

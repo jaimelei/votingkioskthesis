@@ -168,6 +168,8 @@ const Candidates = () => {
 
 // Candidate Card Component
 const CandidateCard = ({ candidate, viewMode }) => {
+  console.log("Rendering candidate:", candidate);
+
   return (
     <div className="render-candidate-card">
       <img src={`/uploads/${candidate.photo_url}`} alt={candidate.name} className="candidate-photo" />

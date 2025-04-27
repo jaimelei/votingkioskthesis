@@ -251,11 +251,7 @@ func (c *AdminController) PostCandidates() revel.Result {
 func (c *AdminController) UploadCandidatePhoto() revel.Result {
 	position := c.Params.Get("position")
 	name := c.Params.Get("name")
-
-	if position == "" || name == "" {
-		c.Response.Status = http.StatusBadRequest
-		return c.RenderJSON(map[string]string{"error": "Position and name are required"})
-	}
+	positionName := c.Params.Get("position_name")
 
 	files := c.Params.Files["photo"]
 	if len(files) == 0 {
@@ -265,39 +261,76 @@ func (c *AdminController) UploadCandidatePhoto() revel.Result {
 
 	fileHeader := files[0]
 	ext := filepath.Ext(fileHeader.Filename)
-	filename := position + "_" + name
-	url := position + "_" + name + ext
-	_, err := c.DB.Exec(`UPDATE candidates SET photo_url = ? WHERE position_name = ?`, url, filename)
-	if err != nil {
-		return c.RenderJSON(map[string]string{"message": "Failed to update photo_url in DB"})
-	}
 
-	file, err := fileHeader.Open()
-	if err != nil {
-		revel.AppLog.Errorf("Failed to open file: %v", err)
-		c.Response.Status = http.StatusBadRequest
-		return c.RenderJSON(map[string]string{"error": "Failed to open photo file"})
-	}
-	defer file.Close()
+	if positionName != "" {
+		url := positionName + ext
+		_, err := c.DB.Exec(`UPDATE candidates SET photo_url = ? WHERE position_name = ?`, url, positionName)
+		if err != nil {
+			return c.RenderJSON(map[string]string{"message": "Failed to update photo_url in DB"})
+		}
 
-	baseDir := filepath.Join(revel.BasePath, "..", "web", "public", "uploads")
-	revel.AppLog.Infof("Uploads directory: %s", baseDir)
+		file, err := fileHeader.Open()
+		if err != nil {
+			revel.AppLog.Errorf("Failed to open file: %v", err)
+			c.Response.Status = http.StatusBadRequest
+			return c.RenderJSON(map[string]string{"error": "Failed to open photo file"})
+		}
+		defer file.Close()
 
-	destinationPath := filepath.Join(baseDir, filename+filepath.Ext(fileHeader.Filename))
-	revel.AppLog.Infof("Saving file to: %s", destinationPath)
-	destFile, err := os.Create(destinationPath)
-	if err != nil {
-		revel.AppLog.Errorf("Failed to create file: %v", err)
-		c.Response.Status = http.StatusInternalServerError
-		return c.RenderJSON(map[string]string{"error": "Failed to save photo"})
-	}
-	defer destFile.Close()
+		baseDir := filepath.Join(revel.BasePath, "..", "web", "public", "uploads")
+		revel.AppLog.Infof("Uploads directory: %s", baseDir)
 
-	_, err = io.Copy(destFile, file)
-	if err != nil {
-		revel.AppLog.Errorf("Failed to save file: %v", err)
-		c.Response.Status = http.StatusInternalServerError
-		return c.RenderJSON(map[string]string{"error": "Failed to save photo"})
+		destinationPath := filepath.Join(baseDir, positionName+filepath.Ext(fileHeader.Filename))
+		revel.AppLog.Infof("Saving file to: %s", destinationPath)
+		destFile, err := os.Create(destinationPath)
+		if err != nil {
+			revel.AppLog.Errorf("Failed to create file: %v", err)
+			c.Response.Status = http.StatusInternalServerError
+			return c.RenderJSON(map[string]string{"error": "Failed to save photo"})
+		}
+		defer destFile.Close()
+
+		_, err = io.Copy(destFile, file)
+		if err != nil {
+			revel.AppLog.Errorf("Failed to save file: %v", err)
+			c.Response.Status = http.StatusInternalServerError
+			return c.RenderJSON(map[string]string{"error": "Failed to save photo"})
+		}
+	} else {
+		filename := position + "_" + name
+		url := position + "_" + name + ext
+		_, err := c.DB.Exec(`UPDATE candidates SET photo_url = ? WHERE position_name = ?`, url, filename)
+		if err != nil {
+			return c.RenderJSON(map[string]string{"message": "Failed to update photo_url in DB"})
+		}
+
+		file, err := fileHeader.Open()
+		if err != nil {
+			revel.AppLog.Errorf("Failed to open file: %v", err)
+			c.Response.Status = http.StatusBadRequest
+			return c.RenderJSON(map[string]string{"error": "Failed to open photo file"})
+		}
+		defer file.Close()
+
+		baseDir := filepath.Join(revel.BasePath, "..", "web", "public", "uploads")
+		revel.AppLog.Infof("Uploads directory: %s", baseDir)
+
+		destinationPath := filepath.Join(baseDir, filename+filepath.Ext(fileHeader.Filename))
+		revel.AppLog.Infof("Saving file to: %s", destinationPath)
+		destFile, err := os.Create(destinationPath)
+		if err != nil {
+			revel.AppLog.Errorf("Failed to create file: %v", err)
+			c.Response.Status = http.StatusInternalServerError
+			return c.RenderJSON(map[string]string{"error": "Failed to save photo"})
+		}
+		defer destFile.Close()
+
+		_, err = io.Copy(destFile, file)
+		if err != nil {
+			revel.AppLog.Errorf("Failed to save file: %v", err)
+			c.Response.Status = http.StatusInternalServerError
+			return c.RenderJSON(map[string]string{"error": "Failed to save photo"})
+		}
 	}
 
 	return c.RenderJSON(map[string]string{"message": "Photo uploaded successfully"})
@@ -456,4 +489,176 @@ func addSheetWithData(f *excelize.File, sheetName string, data [][]string) (int,
 	}
 
 	return index, nil
+}
+
+func (c *AdminController) UpdateCandidate() revel.Result {
+	type UpdateRequest struct {
+		PositionName string `json:"position_name"`
+		Name         string `json:"name"`
+		Position     string `json:"position"`
+		YearLevel    string `json:"year_level"`
+		Program      string `json:"program"`
+		Partylist    string `json:"partylist"`
+	}
+
+	var req UpdateRequest
+	if err := c.Params.BindJSON(&req); err != nil {
+		c.Response.Status = 400
+		return c.RenderJSON(map[string]interface{}{"error": "Invalid request payload"})
+	}
+
+	// Validate required fields
+	if req.PositionName == "" || req.Name == "" || req.Position == "" || req.Partylist == "" {
+		c.Response.Status = 400
+		return c.RenderJSON(map[string]interface{}{"error": "Missing required fields"})
+	}
+
+	// Update query
+	query := `UPDATE candidates SET
+		name = ?,
+		position = ?, 
+		year_level = ?, 
+		program = ?, 
+		partylist = ? 
+		WHERE position_name = ?`
+
+	revel.AppLog.Infof("Executing query with values: %v, %v, %v, %v, %v, %v",
+		req.Name, req.Position, req.YearLevel, req.Program, req.Partylist, req.PositionName)
+
+	result, err := c.DB.Exec(query,
+		req.Name,
+		req.Position,
+		req.YearLevel,
+		req.Program,
+		req.Partylist,
+		req.PositionName,
+	)
+
+	if err != nil {
+		revel.AppLog.Errorf("DB update failed: %v", err)
+		c.Response.Status = 500
+		return c.RenderJSON(map[string]interface{}{"error": "Database update failed"})
+	}
+
+	rowsAffected, _ := result.RowsAffected()
+	revel.AppLog.Infof("Rows affected: %d", rowsAffected)
+	if rowsAffected == 0 {
+		c.Response.Status = 404
+		return c.RenderJSON(map[string]interface{}{
+			"error": "Candidate not found",
+			"details": map[string]string{
+				"position_name": req.PositionName,
+				"name":          req.Name,
+			},
+		})
+	}
+
+	return c.RenderJSON(map[string]interface{}{
+		"success": true,
+		"data": map[string]string{
+			"position_name": req.PositionName,
+			"name":          req.Name,
+			"position":      req.Position,
+			"message":       "Candidate updated successfully",
+		},
+	})
+}
+
+func (c *AdminController) UpdateCredentials() revel.Result {
+	var req struct {
+		PositionName string   `json:"position_name"`
+		Credentials  []string `json:"credentials"`
+	}
+
+	if err := c.Params.BindJSON(&req); err != nil {
+		c.Response.Status = http.StatusBadRequest
+		return c.RenderJSON(map[string]string{"error": "Invalid request payload"})
+	}
+
+	credentialsJSON, err := json.Marshal(req.Credentials)
+	if err != nil {
+		revel.AppLog.Errorf("Failed to marshal credentials: %v", err)
+		return c.RenderJSON(map[string]string{"error": "Failed to process credentials"})
+	}
+
+	query := `UPDATE candidates SET credentials = ? WHERE position_name = ?`
+	_, err = c.DB.Exec(query, string(credentialsJSON), req.PositionName)
+	if err != nil {
+		revel.AppLog.Errorf("Failed to update credentials for %s: %v", req.PositionName, err)
+		return c.RenderJSON(map[string]string{"error": "Failed to update credentials"})
+	}
+
+	return c.RenderJSON(map[string]string{"success": "Credentials updated successfully"})
+}
+
+func (c *AdminController) GetVotesTally() revel.Result {
+    rows, err := c.DB.Query(`
+        SELECT 
+            p.title AS position_title,
+            c.name AS candidate_name,
+            d.name AS department_name,
+            v.total_votes
+        FROM positions p
+        JOIN candidates c ON c.position_id = p.id
+        LEFT JOIN votes v ON v.candidate_id = c.id
+        LEFT JOIN departments d ON v.department_id = d.id
+        ORDER BY p.title, c.name, d.name
+    `)
+    if err != nil {
+        revel.AppLog.Errorf("Failed to fetch votes tally: %v", err)
+        return c.RenderJSON(map[string]string{"error": "Failed to fetch votes tally"})
+    }
+    defer rows.Close()
+
+    positionsMap := make(map[string]map[string]interface{})
+    for rows.Next() {
+        var positionTitle, candidateName, departmentName string
+        var totalVotes int
+        if err := rows.Scan(&positionTitle, &candidateName, &departmentName, &totalVotes); err != nil {
+            revel.AppLog.Errorf("Failed to scan row: %v", err)
+            continue
+        }
+
+        if _, exists := positionsMap[positionTitle]; !exists {
+            positionsMap[positionTitle] = map[string]interface{}{
+                "title": positionTitle,
+                "candidates": make(map[string]map[string]interface{}),
+            }
+        }
+
+        candidates := positionsMap[positionTitle]["candidates"].(map[string]map[string]interface{})
+        if _, exists := candidates[candidateName]; !exists {
+            candidates[candidateName] = map[string]interface{}{
+                "name":  candidateName,
+                "votes": make(map[string]int),
+                "total": 0,
+            }
+        }
+
+        candidate := candidates[candidateName]
+        candidate["votes"].(map[string]int)[departmentName] = totalVotes
+        candidate["total"] = candidate["total"].(int) + totalVotes
+    }
+
+    var positions []map[string]interface{}
+    for _, position := range positionsMap {
+        candidates := position["candidates"].(map[string]map[string]interface{})
+        var candidatesList []map[string]interface{}
+        for _, candidate := range candidates {
+            votes := candidate["votes"].(map[string]int)
+            votesList := []int{}
+            for _, dept := range []string{"Dept 1", "Dept 2", "Dept 3", "Dept 4", "Dept 5"} {
+                votesList = append(votesList, votes[dept])
+            }
+            candidatesList = append(candidatesList, map[string]interface{}{
+                "name":  candidate["name"],
+                "votes": votesList,
+                "total": candidate["total"],
+            })
+        }
+        position["candidates"] = candidatesList
+        positions = append(positions, position)
+    }
+
+    return c.RenderJSON(positions)
 }

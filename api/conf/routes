@@ -37,7 +37,7 @@ GET         /api/first-password                                             Admi
 GET         /api/get-election-status                                        VotingController.GetElectionStatus
 GET         /api/get-backup-list                                            AdminController.GetBackupList
 GET         /api/get-voter/:student_id                                      VotingController.GetVoter
-
+GET         /api/get-votes-tally                                            AdminController.GetVotesTally
 
 POST        /api/post-vote                                                  VotingController.PostVote
 POST        /api/post-voting-timeframe                                      AdminController.PostVotingTimeframe
@@ -47,5 +47,7 @@ POST        /api/post-candidates                                            Admi
 POST        /api/upload-candidate-photo                                     AdminController.UploadCandidatePhoto
 POST        /api/post-credentials                                           AdminController.PostCredentials
 POST        /api/generate-backup                                            AdminController.GenerateBackup
+POST        /api/update-candidate                                           AdminController.UpdateCandidate
+POST        /api/update-credentials                                         AdminController.UpdateCredentials
 
 DELETE      /api/reset-elections                                            AdminController.ResetElections

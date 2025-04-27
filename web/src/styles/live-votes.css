@@ -1,3 +1,4 @@
+@media screen and (min-width: 1401px) {
 /* ===== General Layout ===== */
 .livevotes-container {
   display: flex;
@@ -85,12 +86,12 @@
 .view-toggle-buttons {
   display: flex;
   gap: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .view-toggle-buttons button {
   padding: 10px 15px;
-  font-size: 17px;
+  font-size: 14px;
   border: none;
   background: #dcdcdc;
   color: #333;
@@ -172,8 +173,8 @@
 
 .candidate-name {
   font-weight: 400;
-  margin-top: 8px;
-  font-size: 1.2em;
+  margin-top: 3px;
+  font-size: 1rem;
   font-family: Montserrat;
 }
 
@@ -184,6 +185,197 @@
   border: 1px solid #ccc;
   border-radius: 4px;
   margin-bottom: 10px;
+}
+}
+
+@media screen and (min-width: 1201px) and (max-width:1400px) {
+/* ===== General Layout ===== */
+.livevotes-container {
+  display: flex;
+  height: 100vh;
+  background-color: #f9f9f9;
+}
+
+/* ===== Sidebar Styles ===== */
+.livevotes-sidebar {
+    background-color: #4f4b23;
+    color: white;
+    padding: 20px;
+    width: 250px;
+  }
+
+.livevotes-sidebar-title {
+    font-size: 3.5rem;
+    margin: 0 10px 0 0;
+    font-family: 'Caveat';
+    font-weight: bold;
+    padding: 5px 0 0 10px;
+}
+
+.livevotes-sidebar-menu {
+    list-style: none;
+    padding: 0;
+}
+
+.livevotes-menu-item {
+    padding: 10px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    border-radius: 15px;
+    margin-bottom: 5px;
+    transition: background 0.3s ease;
+  }
+
+  .livevotes-menu-item:hover {
+    background-color: #706f3d;
+    border-radius: 5px;
+  }
+
+  .livevotes-menu-item-open {
+    padding: 10px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    border-radius: 15px;
+    margin-bottom: 5px;
+    transition: background 0.3s ease;
+  }
+
+  .livevotes-active-tab {
+    background: #706f3d;
+    font-weight: bold;
+  }
+
+  .livevotes-dropdown {
+    list-style: none;
+    padding-left: 15px;
+  }
+
+/* ===== Main Content ===== */
+.livevotes-content {
+    background-color: #8d8753;
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5px 30px 30px 30px;
+}
+
+.livevotes-content-title {
+  font-size: 3rem;
+  font-family: Montserrat;
+  font-weight: bold;
+  margin: 5px 0 10px 0;
+}
+
+/* ===== View Toggle Buttons ===== */
+.view-toggle-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.view-toggle-buttons button {
+  padding: 10px 15px;
+  font-size: 14px;
+  border: none;
+  background: #dcdcdc;
+  color: #333;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: 0.2s;
+  font-family: Montserrat;
+  font-weight: 400;
+}
+
+.view-toggle-buttons button:hover {
+  background: #b2b3b3;
+}
+
+.active-view {
+  background: #727272 !important;
+  color: #fff;
+  font-weight: bold;
+}
+
+/* ===== Graphs ===== */
+.graph-container {
+    background-color: #F2DD6C;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+    width: 80%;
+    height: 65%;
+}
+
+.bar-graph {
+    max-width: 700px;
+    max-height: 500px;
+    border: 2px solid black;
+    background-color: white;
+}
+
+.bar-graphs {
+  max-width: 1100px;
+  max-height: 500px;
+  border: 2px solid black;
+  background-color: white;
+}
+
+/* Pie Chart Layout */
+.pie-charts {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    background-color: white;
+    width: 100%;
+    height: 100%;
+    border: 2px solid black;
+}
+
+.pie-chart {
+  width: 50%;
+  background-color: white;
+}
+
+.pie-chart-container {
+  flex: 1 1 100px; /* Allow flexible resizing */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-height: 350px;
+}
+
+.pie-charts canvas {
+  max-width: none;
+  max-height: none;
+  width: 300px; /* Increase width */
+  height: 300px; /* Increase height */
+}
+
+.candidate-name {
+  font-weight: 400;
+  margin-top: 3px;
+  font-size: 1rem;
+  font-family: Montserrat;
+}
+
+/* Department Dropdown */
+.graph-container select {
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
 }
 
 /* Responsive Design */

@@ -229,7 +229,7 @@ function EditDetails({ onClose }) {
     <div className="details-style">
       <div className="card-container">
         <div className="card">
-          <button className="close-button" onClick={onClose}>
+          <button className="close-details-button" onClick={onClose}>
             &times;
           </button>
 

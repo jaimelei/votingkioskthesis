@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { jsPDF } from "jspdf";
+import "jspdf-autotable";
 import "../styles/admin.css";
 import ConfirmCard from "../components/confirm-card";
 import PreviewCandidacy from "./admin/preview-candidacy";
@@ -221,6 +223,122 @@ function Admin() {
     }
   };
 
+  const handleCreateVotesTallyPDF = async () => {
+    const doc = new jsPDF();
+
+    // Use department labels from the departmentKeys
+    const departmentLabels = {
+      coe: "COE",
+      cba: "CBA",
+      cics: "CICS",
+      cit: "CIT",
+      coed: "COED",
+    };
+    const departmentKeys = Object.keys(departmentLabels);
+  
+    try {
+      // Fetch all positions and candidates
+      const candidatesResponse = await fetchWithAuth(`${API_URL}/api/get-all-candidates`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+  
+      if (!candidatesResponse.ok) {
+        throw new Error(`Failed to fetch candidates: ${candidatesResponse.statusText}`);
+      }
+  
+      const candidatesData = await candidatesResponse.json();
+  
+      // Sort positions: Governor > Vice Governor > Board Members (alphabetical)
+      const positions = [...new Set(candidatesData.map((c) => c.position))].sort((a, b) => {
+        if (a === "governor") return -1;
+        if (b === "governor") return 1;
+        if (a === "vice governor") return -1;
+        if (b === "vice governor") return 1;
+        if (a.startsWith("BM") && b.startsWith("BM")) return a.localeCompare(b);
+        if (a.startsWith("BM")) return 1;
+        if (b.startsWith("BM")) return -1;
+        return a.localeCompare(b);
+      });
+  
+      let startY = 10; // Initial Y position for the first table
+  
+      // Add the title at the top of the PDF
+      doc.setFontSize(16);
+      doc.text("Local Student Council Elections A.Y. 2025-2026", doc.internal.pageSize.getWidth() / 2, startY, { align: "center" });
+      startY += 10; // Add some spacing below the title
+  
+      for (const position of positions) {
+        const positionCandidates = candidatesData.filter((c) => c.position === position);
+  
+        // Fetch total votes for each candidate
+        const totalVotesPromises = positionCandidates.map((candidate) =>
+          fetchWithAuth(`${API_URL}/api/get-total-votes/${candidate.position_name}`, {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          })
+            .then((res) => res.json())
+            .then((data) => ({ name: candidate.name, total: data.total_votes || 0 }))
+            .catch(() => ({ name: candidate.name, total: 0 }))
+        );
+  
+        const totalVotes = await Promise.all(totalVotesPromises);
+  
+        // Fetch department votes for each candidate
+        const departmentVotesPromises = positionCandidates.map((candidate) =>
+          Promise.all(
+            departmentKeys.map((dept) =>
+              fetchWithAuth(`${API_URL}/api/get-department-votes/${candidate.position_name}/${dept}`, {
+                method: "GET",
+                headers: { "Content-Type": "application/json" },
+              })
+                .then((res) => res.json())
+                .then((data) => ({ [dept]: data.total_votes || 0 }))
+                .catch(() => ({ [dept]: 0 }))
+            )
+          ).then((results) => {
+            const votes = results.reduce((acc, curr) => ({ ...acc, ...curr }), {});
+            return { name: candidate.name, votes };
+          })
+        );
+  
+        const departmentVotes = await Promise.all(departmentVotesPromises);
+  
+        // Combine total votes and department votes
+        const tableData = positionCandidates.map((candidate) => {
+          const total = totalVotes.find((v) => v.name === candidate.name)?.total || 0;
+          const deptVotes = departmentVotes.find((v) => v.name === candidate.name)?.votes || {};
+          return [
+            candidate.name,
+            ...departmentKeys.map((dept) => deptVotes[dept] || 0),
+            total,
+          ];
+        });
+  
+        // Add position title (centered)
+        doc.setFontSize(14);
+        doc.text(position.toUpperCase(), doc.internal.pageSize.getWidth() / 2, startY, { align: "center" });
+  
+        // Add table to the PDF
+        doc.autoTable({
+          head: [["Name", ...departmentKeys.map((key) => departmentLabels[key]), "Total Votes"]],
+          body: tableData,
+          startY: startY + 10, // Start below the title
+          headStyles: { fillColor: "#525252", halign: "center" }, // Top row background color and center alignment
+        });
+  
+        // Update startY for the next table
+        startY = doc.lastAutoTable.finalY + 20; // Add some spacing between tables
+      }
+  
+      // Save the PDF with a given file name
+      doc.save("Local Student Council Elections A.Y. 2025-2026.pdf");
+    } catch (error) {
+      console.error("Error generating votes tally PDF:", error);
+      alert("Failed to generate votes tally PDF.");
+    }
+  };
+
 
 
   //||||||||||||||||||||
@@ -329,7 +447,7 @@ function Admin() {
                             </button>
                           </div>
                           <div className="edit-button-container">
-                          <button className="edit-button" onClick={handleEditClick}>Edit</button>
+                          <button className="edit-button" onClick={handleEditClick}>Add Candidates</button>
                           </div>
                         </div>
                         <div className="candidacy-content">{renderCandidacy()}</div>
@@ -390,6 +508,26 @@ function Admin() {
                         )}
                     </div>
                 </div>
+
+                {/* New Votes Tally Section */}
+                <div className="feature">
+                  <div className="feature-section">
+                    <h2>
+                      Votes Tally
+                      <span className="custom-tooltip">
+                        ⓘ
+                        <span className="tooltip-content">
+                          Saves a copy of the current vote tally.
+                        </span>
+                      </span>
+                    </h2>
+                    <div className="button-row">
+                      <button onClick={handleCreateVotesTallyPDF} className="backup-button">
+                        Create PDF
+                      </button>
+                    </div>
+                  </div>
+                </div>
             </div>
           );      
       case "access":
@@ -418,7 +556,7 @@ function Admin() {
                                 <input type="form" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} required />
                               </div>
                             </div>
-                            <button type="submit">Update Password</button>
+                            <button type="update-button">Update Password</button>
                           </form>
                           {showConfirmCard && (
                             <ConfirmCard

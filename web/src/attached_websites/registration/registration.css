@@ -73,6 +73,14 @@
     opacity: 0;
     animation: popIn 0.3s ease-in-out forwards;
   }
+
+  .step-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
   
   /* Pop-in Animation */
   @keyframes popIn {
@@ -162,4 +170,3 @@
       width: 180px;
     }
   }
-  

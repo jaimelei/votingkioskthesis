@@ -23,7 +23,7 @@ func (c *VotingController) SetDB() revel.Result {
 
 func (c *VotingController) GetElectionStatus() revel.Result {
 	var isActive bool
-	err := c.DB.QueryRow("SELECT is_active FROM election_settings LIMIT 1").Scan(&isActive)
+	err := c.DB.QueryRow("SELECT is_active FROM election_status_view LIMIT 1").Scan(&isActive)
 	if err != nil {
 		return c.RenderJSON(map[string]interface{}{
 			"success": false,

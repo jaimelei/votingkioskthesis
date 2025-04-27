@@ -14,7 +14,7 @@ import Navbar from './components/navbar';
 
 function NavBar() {
     const location = useLocation(); // Get the current route
-    const hideNavbarOn = ['/', '/voting', '/registration']; // Define routes where Navbar should not appear
+    const hideNavbarOn = ['/', '/voting', '/registration', '/registration/register', '/registration/fingerprint', '/registration/success']; // Define routes where Navbar should not appear
 
     return (
         <>
@@ -25,7 +25,7 @@ function NavBar() {
 
 function App() {
     return (
-        <Router>
+        <>
             <NavBar />
             <Routes>
                 <Route path="/" element={<Homepage />} />
@@ -41,7 +41,7 @@ function App() {
                 <Route path="/voting" element={<Voting />} />
                 <Route path="/registration/*" element={<Registration />} />
             </Routes>
-        </Router>
+        </>
     );
 }
 

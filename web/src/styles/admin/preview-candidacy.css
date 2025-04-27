@@ -47,3 +47,25 @@ font-weight: bold;
 font-size: 16px;
 }
 
+.candidate-info-container {
+    width: 90%;
+    text-align: left;
+}
+
+  
+.candidate-details {
+    text-align: left;
+}
+
+.info-edit-flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.indiv-edit-button {
+    border-radius: 25px;
+    padding: 0 20px;
+    height: 40px;
+}

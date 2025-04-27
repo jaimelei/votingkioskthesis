@@ -1,9 +1,11 @@
 /* Election Banner */
 .container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
+  background-image: url('../../../public/images/voting-register-bg.jpg');
 }
 
 .floating-box {
@@ -17,8 +19,8 @@
   background-color: #727272;
   color: white;
   border: none;
-  padding: 15px 30px;
-  font-size: 24px;
+  padding: 10px 50px;
+  font-size: 1.1rem;
   border-radius: 5px;
   cursor: pointer;
   margin-top: 10px;
@@ -71,19 +73,26 @@
 /* Voting Pages */
 .governor-container {
   text-align: center;
-  padding: 20px;
+  padding: 10px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-image: url('../../../public/images/voting-register-bg.jpg');
+  height: 100vh;
 }
 
 .governor-title {
-  font-size: 28px;
-  margin-bottom: 20px;
+  font-size: 2.5rem;
+  margin: 10px 0 20px;
 }
 
-.governor-content {
+.governor-contents {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  flex-wrap: wrap;
+  width: 70%;
+  height: center;
 }
 
 .candidate {
@@ -96,9 +105,8 @@
 }
 
 .candidate-img {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
+  width: 227px;
+  height: 300px;
   object-fit: cover;
 }
 
@@ -116,7 +124,7 @@
 .previous-button {
   background-color: #727272;
   color: white;
-  padding: 20px 40px;
+  padding: 10px 40px;
   font-size: 20px;
   border-radius: 5px;
   cursor: pointer;
@@ -130,7 +138,7 @@
 .abstain-button {
   background-color: #727272;
   color: white;
-  padding: 20px 40px;
+  padding: 10px 40px;
   font-size: 20px;
   border-radius: 5px;
   cursor: pointer;   
@@ -171,8 +179,8 @@
 .cancel-button {
   background-color: #d6d6d6;
   color: white;
-  padding: 20px 40px;
-  font-size: 20px;
+  padding: 10px 40px;
+  font-size: 17px;
   border-radius: 5px;
   cursor: pointer;
   font-family: Montserrat;
@@ -182,8 +190,8 @@
 .submit-button {
   background-color: #727272;
   color: white;
-  padding: 20px 40px;
-  font-size: 20px;
+  padding: 10px 40px;
+  font-size: 17px;
   border-radius: 5px;
   cursor: pointer;
   font-family: Montserrat;
@@ -218,7 +226,7 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color: #f8f9fa;
+  background-image: url('../../../public/images/voting-register-bg.jpg');
 }
 
 .student-id-box {
@@ -267,4 +275,17 @@
 
 .proceed-button:hover {
   background-color: #797878;
+}
+
+.inactive-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-image: url('../../../public/images/voting-register-bg.jpg');
+}
+
+.scan-container {
+  background-image: url('../../../public/images/voting-register-bg.jpg');
 }

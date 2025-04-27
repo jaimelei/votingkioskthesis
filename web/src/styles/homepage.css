@@ -27,88 +27,177 @@ body, html {
 }
 
 /* Styling for Desktop */
-.homepage-style hr {
-    width: 80%;
-    border: 2px solid white;
-    margin: 15px 0;
+@media screen and (min-width: 1401px) {
+    .homepage-style hr {
+        width: 80%;
+        border: 2px solid white;
+        margin: 15px 0;
+    }
+    
+    .homepage-style h1 {
+        font-size: 8rem;
+        font-family: 'Montserrat';
+        font-weight: bold;
+        margin: 0;
+        padding-top: 150px;
+    }
+    
+    .homepage-style h2 {
+        font-size: 4.5rem;
+        font-family: 'Montserrat';
+        font-weight: 200;
+        margin: 10px 0;
+    }
+    
+    .homepage-style .col-1 p {
+        font-size: 2rem;
+        color: #f0f0f0;
+        font-family: 'Montserrat';
+        font-weight: 200;
+        margin-top: 115px;
+    }
+    
+    .homepage-style .col-2 p {
+        font-family: 'Caveat';
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #f0f0f0;
+    }
+    
+    .homepage-style .grid-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        height: 100vh;
+        background-image: url('../../public/images/background-home.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+    
+    .homepage-style .col-1 {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        color: white;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 20px;
+    }
+    
+    .homepage-style .col-2 {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+    }
+    
+    .homepage-style .button {
+        display: block;
+        width: 500px;
+        padding: 10px;
+        text-align: center;
+        color: white;
+        text-decoration: none;
+        border: 6px solid white;
+        font-family: 'Caveat';
+        font-size: 5rem;
+        font-weight: bold;
+        border-radius: 50px;
+        transition: background-color 0.3s, color 0.3s;
+    }
+    
+    .homepage-style .button:hover {
+        background-color: white;
+        color: black;
+    }
 }
 
-.homepage-style h1 {
-    font-size: 8rem;
-    font-family: 'Montserrat';
-    font-weight: bold;
-    margin: 0;
-    padding-top: 150px;
-}
-
-.homepage-style h2 {
-    font-size: 4.5rem;
-    font-family: 'Montserrat';
-    font-weight: 200;
-    margin: 10px 0;
-}
-
-.homepage-style .col-1 p {
-    font-size: 2rem;
-    color: #f0f0f0;
-    font-family: 'Montserrat';
-    font-weight: 200;
-    margin-top: 115px;
-}
-
-.homepage-style .col-2 p {
-    font-family: 'Caveat';
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: #f0f0f0;
-}
-
-.homepage-style .grid-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    height: 100vh;
-    background-image: url('../../public/images/background-home.png');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-}
-
-.homepage-style .col-1 {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    color: white;
-    background: rgba(0, 0, 0, 0.5);
-    padding: 20px;
-}
-
-.homepage-style .col-2 {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-}
-
-.homepage-style .button {
-    display: block;
-    width: 500px;
-    padding: 10px;
-    text-align: center;
-    color: white;
-    text-decoration: none;
-    border: 6px solid white;
-    font-family: 'Caveat';
-    font-size: 5rem;
-    font-weight: bold;
-    border-radius: 50px;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.homepage-style .button:hover {
-    background-color: white;
-    color: black;
+@media screen and (min-width: 1201px) and (max-width:1400px) {
+    .homepage-style hr {
+        width: 80%;
+        border: 2px solid white;
+        margin: 15px 0;
+    }
+    
+    .homepage-style h1 {
+        font-size: 6rem;
+        font-family: 'Montserrat';
+        font-weight: bold;
+        margin: 0;
+        padding-top: 50px;
+    }
+    
+    .homepage-style h2 {
+        font-size: 2rem;
+        font-family: 'Montserrat';
+        font-weight: 200;
+        margin: 10px 0;
+    }
+    
+    .homepage-style .col-1 p {
+        font-size: 1.5rem;
+        color: #f0f0f0;
+        font-family: 'Montserrat';
+        font-weight: 200;
+        margin-top: 115px;
+    }
+    
+    .homepage-style .col-2 p {
+        font-family: 'Caveat';
+        font-size: 2rem;
+        font-weight: bold;
+        color: #f0f0f0;
+    }
+    
+    .homepage-style .grid-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        height: 100vh;
+        background-image: url('../../public/images/background-home.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+    
+    .homepage-style .col-1 {
+        display: flex;
+        flex-direction: column; 
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        color: rgb(255, 255, 255);
+        background: rgba(0, 0, 0, 0.5);
+        padding: 20px;
+    }
+    
+    .homepage-style .col-2 {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+    }
+    
+    .homepage-style .button {
+        display: block;
+        width: 60%;
+        padding: 10px;
+        text-align: center;
+        color: white;
+        text-decoration: none;
+        border: 6px solid white;
+        font-family: 'Caveat';
+        font-size: 3.5rem;
+        font-weight: bold;
+        border-radius: 50px;
+        transition: background-color 0.3s, color 0.3s;
+    }
+    
+    .homepage-style .button:hover {
+        background-color: white;
+        color: black;
+    }
 }
 
 /* 🌟 RESPONSIVE DESIGN FOR MOBILE (≤ 768px) */

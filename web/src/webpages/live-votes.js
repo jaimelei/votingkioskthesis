@@ -56,7 +56,7 @@ const LiveVotes = () => {
     const positionCandidates = candidates.filter((c) => c.position === activeTab);
     if (positionCandidates.length < 2) return;
 
-    const positionNames = positionCandidates.map((c) => `${activeTab}_${c.name}`);
+    const positionNames = positionCandidates.map((c) => c.position_name);
 
     Promise.all(
       positionNames.map((posName) =>
@@ -80,7 +80,7 @@ const LiveVotes = () => {
     const positionCandidates = candidates.filter((c) => c.position === activeTab);
     if (positionCandidates.length < 2) return;
 
-    const positionNames = positionCandidates.map((c) => `${activeTab}_${c.name}`);
+    const positionNames = positionCandidates.map((c) => c.position_name);
 
     Promise.all(
       positionNames.flatMap((posName) =>
@@ -99,6 +99,14 @@ const LiveVotes = () => {
       setDepartmentVotes(deptVotes);
     });
   }, [activeTab, candidates]);
+
+  const getVotesForCandidate = (candidate) => {
+    return totalVotes[candidate.position_name] || 0;
+  };
+
+  const getDepartmentVotesForCandidate = (candidate, department) => {
+    return departmentVotes[`${candidate.position_name}_${department}`] || 0;
+  };
 
   return (
     <div className="livevotes-container">
@@ -190,78 +198,78 @@ const LiveVotes = () => {
         </div>
 
         <div className="graph-container">
-          {viewMode === "totalVotes" && (
-            <Bar
-              className="bar-graph"
-              data={{
-                labels: candidates.filter((c) => c.position === activeTab).map((c) => c.name),
-                datasets: [
-                  {
-                    label: "",
-                    data: candidates
-                      .filter((c) => c.position === activeTab)
-                      .map((c) => totalVotes[`${activeTab}_${c.name}`] || 0),
-                    backgroundColor: ["#F2DD6C", "#4CAF50"],
-                    borderColor: "#000",
-                    borderWidth: 1,
-                  },
-                ],
-              }}
-              options={{
-                plugins: {
-                  legend: { display: false },
-                },
-              }}
-            />
-          )}
-
-          {viewMode === "breakdown" && (
-            <div className="pie-charts">
-              {candidates
-                .filter((c) => c.position === activeTab)
-                .map((c) => (
-                  <div key={c.name} className="pie-chart-container">
-                    <Pie
-                      className="pie-chart"
-                      data={{
-                        labels: departmentKeys.map((dept) => departmentLabels[dept]),
-                        datasets: [
-                          {
-                            data: departmentKeys.map(
-                              (dept) => departmentVotes[`${activeTab}_${c.name}_${dept}`] || 0
-                            ),
-                            backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4CAF50", "#9C27B0"],
-                            borderColor: "#000",
-                            borderWidth: 1,
-                          },
-                        ],
-                      }}
-                    />
-                    <p className="candidate-name">{c.name}</p>
-                  </div>
-                ))}
-            </div>
-          )}
-
-          {viewMode === "departmentComparison" && (
-            <Bar
-              className="bar-graphs"
-              data={{
-                labels: departmentKeys.map((dept) => departmentLabels[dept]),
-                datasets: candidates
+        {viewMode === "totalVotes" && (
+        <Bar
+          className="bar-graph"
+          data={{
+            labels: candidates.filter((c) => c.position === activeTab).map((c) => c.name),
+            datasets: [
+              {
+                label: "",
+                data: candidates
                   .filter((c) => c.position === activeTab)
-                  .map((c, index) => ({
-                    label: c.name,
-                    data: departmentKeys.map(
-                      (dept) => departmentVotes[`${activeTab}_${c.name}_${dept}`] || 0
-                    ),
-                    backgroundColor: index % 2 === 0 ? "#F2DD6C" : "#4CAF50",
-                    borderColor: "#000",
-                    borderWidth: 1,
-                  })),
-              }}
-            />
-          )}
+                  .map((c) => getVotesForCandidate(c)),
+                backgroundColor: ["#F2DD6C", "#4CAF50"],
+                borderColor: "#000",
+                borderWidth: 1,
+              },
+            ],
+          }}
+          options={{
+            plugins: {
+              legend: { display: false },
+            },
+          }}
+        />
+      )}
+
+{viewMode === "breakdown" && (
+        <div className="pie-charts">
+          {candidates
+            .filter((c) => c.position === activeTab)
+            .map((c) => (
+              <div key={c.position_name} className="pie-chart-container">
+                <Pie
+                  className="pie-chart"
+                  data={{
+                    labels: departmentKeys.map((dept) => departmentLabels[dept]),
+                    datasets: [
+                      {
+                        data: departmentKeys.map(
+                          (dept) => getDepartmentVotesForCandidate(c, dept)
+                        ),
+                        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4CAF50", "#9C27B0"],
+                        borderColor: "#000",
+                        borderWidth: 1,
+                      },
+                    ],
+                  }}
+                />
+                <p className="candidate-name">{c.name}</p>
+              </div>
+            ))}
+        </div>
+      )}
+
+{viewMode === "departmentComparison" && (
+    <Bar
+      className="bar-graphs"
+      data={{
+        labels: departmentKeys.map((dept) => departmentLabels[dept]),
+        datasets: candidates
+          .filter((c) => c.position === activeTab)
+          .map((c, index) => ({
+            label: c.name,
+            data: departmentKeys.map(
+              (dept) => getDepartmentVotesForCandidate(c, dept)
+            ),
+            backgroundColor: index % 2 === 0 ? "#F2DD6C" : "#4CAF50",
+            borderColor: "#000",
+            borderWidth: 1,
+          })),
+      }}
+    />
+  )}
         </div>
       </main>
     </div>
