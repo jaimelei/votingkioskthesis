@@ -10,7 +10,7 @@ const WEBSOCKET_URL = process.env.REACT_APP_WEBSOCKET_URL;
 const db = mysql.createPool({
   host: "localhost",
   user: "root", // change this
-  password: "", // change this
+  password: "!Database123", // change this
   database: "voting_kiosk_db", // change this
   port: 3306,
 });
