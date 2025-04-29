@@ -177,6 +177,18 @@ function Voting() {
     fetchCandidates().then(setCandidates).catch(console.error).finally(() => setIsLoading(false));
   }, []);
 
+  // useEffect(() => {
+  //   if (page === "home") {
+  //     const fakeInfo = {
+  //       student_id: "2021102614",
+  //       student_name: "Test Student",
+  //       program: "Bachelor of Science in Computer Engineering",
+  //       has_voted: false,
+  //     };
+  //     handleScan(fakeInfo);
+  //   }
+  // }, [page]);
+
   useEffect(() => {
     fetch(`${API_URL}/api/get-election-status`, {
       method: "GET",
@@ -193,55 +205,72 @@ function Voting() {
       .catch(() => setPage("inactive"));
   }, []);
 
-  const handleStudentIDSubmit = (id, info) => {
-    setStudentID(id);
-    setVoterInfo(info);
-    setPage("scan");
-  };
-
   // Handle Scan directly without fetching again
   const handleScan = (infoFromScan) => {
     if (infoFromScan.has_voted) {
       alert("You have already voted.");
       setPage("scan");
-    } else {
+    } else {  
       setStudentInfo(infoFromScan);
-      setPage("governor");
+      fetchVoterInfo(infoFromScan.student_id)
+      .then((voterData) => {
+        // Do something with voterData if needed
+        setVoterInfo(voterData);
+        setPage("governor");
+      })
+      .catch((error) => {
+        console.error(error);
+        alert(error.message || "Failed to fetch voter info.");
+        setPage("scan"); // optional: go back if there's an error
+      });
     }
   };
 
   const handleVote = (position, name) => {
-    const updatedSelections = selections.filter(s => s.position !== position);
-    updatedSelections.push({ position, name });
-    setSelections(updatedSelections);
-
+    // For Board Member, we use the dynamically set `showBM`
+    const positionName = position === "Board Member" ? `BM ${showBM}` : position;
+  
+    // Find the selected candidate from the fetched candidates
+    const candidate = candidates.find(c => c.name === name && c.position === positionName);
+  
+    // If the candidate is found, store the position_name
+    const updatedSelections = selections.filter(s => s.position !== position); // Remove previous selection
+    updatedSelections.push({ position, name: candidate ? candidate.position_name : "" });
+  
+    setSelections(updatedSelections); // Update selections
+  
     if (position === "Governor") {
       setPage("vice-governor");
     } else if (position === "Vice Governor") {
       setPage("board-member");
     } else if (position === "Board Member") {
-      setShowPopup(true);
+      setShowPopup(true);  // Show the summary popup after the Board Member vote
     }
   };
-
+  
   const handleSubmit = async () => {
+    // Fetch selections
     const governor = selections.find(s => s.position === "Governor")?.name || "";
     const viceGovernor = selections.find(s => s.position === "Vice Governor")?.name || "";
     const boardMember = selections.find(s => s.position === "Board Member")?.name || "";
 
-    const governorVote = `Governor_${governor}`
-    const viceGovernorVote = `Vice Governor_${viceGovernor}`
-    const boardMemberVote = `BM ${showBM}_${boardMember}`
+    // Ensure that the value sent for each vote is just the `position_name`, not a double-prefix.
+    const governorVote = governor ? `Governor_${governor.split('_')[1]}` : "";
+    const viceGovernorVote = viceGovernor ? `Vice Governor_${viceGovernor.split('_')[1]}` : "";
+    const boardMemberVote = boardMember ? `BM ${showBM}_${boardMember.split('_')[1]}` : "";
 
+    // Construct the payload
     const payload = {
       governor_vote: governorVote,
       vice_governor_vote: viceGovernorVote,
       board_member_vote: boardMemberVote,
       program: voterInfo.program,
-      student_id: studentID
+      student_id: voterInfo.student_id
     };
 
     try {
+      console.log("Submitting payload:", payload);
+
       const response = await fetch(`${API_URL}/api/post-vote`, {
           method: 'POST',
           headers: {
@@ -286,7 +315,7 @@ function Voting() {
 
   return (
     <div className="app-container white-background">
-      {page === "home" && <ElectionBanner onVote={() => setPage("qr-scan")} />}
+      {page === "home" && <ElectionBanner onVote={() => setPage("governor")} />}
       {page === "qr-scan" && <ScanPage onScan={handleScan} onBack={() => setPage("governor")} />}
       {page === "governor" && (
         <VotingPage

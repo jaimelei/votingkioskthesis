@@ -74,10 +74,10 @@ func (c *VotingController) PostVote() revel.Result {
 	votes := []string{request.GovernorVote, request.ViceGovernorVote, request.BoardMemberVote}
 	for _, vote := range votes {
 		query := fmt.Sprintf(`
-			INSERT INTO votes (position_name, %s)
-			VALUES (?, 1)
-			ON DUPLICATE KEY UPDATE %s = %s + 1
-			`, department, department, department)
+			UPDATE votes
+			SET %s = %s + 1
+			WHERE position_name = ?
+		`, department, department)
 
 		_, err := c.DB.Exec(query, vote)
 		if err != nil {
@@ -85,11 +85,11 @@ func (c *VotingController) PostVote() revel.Result {
 		}
 	}
 
-	query := `UPDATE voters SET has_voted = TRUE WHERE student_id = ?`
-	_, err = c.DB.Exec(query, request.StudentID)
+	// Update voter's status
+	_, err = c.DB.Exec(`UPDATE voters SET has_voted = TRUE WHERE student_id = ?`, request.StudentID)
 	if err != nil {
 		return c.RenderJSON(map[string]string{"error": "Failed to update voting status"})
 	}
 
-	return c.RenderJSON(map[string]string{"success": "Votes has been added"})
+	return c.RenderJSON(map[string]string{"success": "Votes have been added"})
 }
