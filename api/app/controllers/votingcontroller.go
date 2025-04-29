@@ -59,6 +59,7 @@ func (c VotingController) GetVoter(student_id string) revel.Result {
 	return c.RenderJSON(voter)
 }
 
+// new
 func (c *VotingController) PostVote() revel.Result {
 	var request models.Votes
 	if err := c.Params.BindJSON(&request); err != nil {

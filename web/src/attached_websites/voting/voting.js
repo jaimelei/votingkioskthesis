@@ -187,7 +187,7 @@ function Voting() {
   //     };
   //     handleScan(fakeInfo);
   //   }
-  // }, [page]);
+  // }, [page]); 
 
   useEffect(() => {
     fetch(`${API_URL}/api/get-election-status`, {
