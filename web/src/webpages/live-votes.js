@@ -4,6 +4,7 @@ import { Bar, Pie } from "react-chartjs-2";
 import Chart from "chart.js/auto";
 
 const API_URL = process.env.REACT_APP_API_URL || "http://localhost:9000";
+const HARDWARE_API = process.env.REACT_APP_HARDWARE_API;
 
 const departmentLabels = {
   coe: "COE",
@@ -60,7 +61,7 @@ const LiveVotes = () => {
 
     Promise.all(
       positionNames.map((posName) =>
-        fetch(`${API_URL}/api/get-total-votes/${posName}`, {
+        fetch(`${HARDWARE_API}/voting-api/get-total-votes.php?position_name=${encodeURIComponent(posName)}`, {
           method: "GET",
           headers: {"Ngrok-Skip-Browser-Warning": "true",}
         })
@@ -85,7 +86,7 @@ const LiveVotes = () => {
     Promise.all(
       positionNames.flatMap((posName) =>
         departmentKeys.map((dept) =>
-          fetch(`${API_URL}/api/get-department-votes/${posName}/${dept}`, {
+          fetch(`${HARDWARE_API}/voting-api/get-department-votes.php?position_name=${encodeURIComponent(posName)}&department=${encodeURIComponent(dept)}`, {
             method: "GET",
             headers: {"Ngrok-Skip-Browser-Warning": "true",}
           })
