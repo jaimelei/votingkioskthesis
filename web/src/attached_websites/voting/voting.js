@@ -35,9 +35,9 @@ const fetchVoterInfo = async (studentId) => {
             throw new Error(data.error);  // This handles "Voter not found" or other errors returned by the backend.
         }
 
-      if (data.has_voted) {
-        throw new Error("Student has already voted.");
-      }
+        if (parseInt(data.has_voted) === 1) {
+          throw new Error("Student has already voted.");
+        }
 
       return data;
   } catch (error) {
@@ -179,7 +179,7 @@ function Voting() {
 
   // useEffect(() => {
   //   if (page === "home") {
-  //     const fakeInfo = {
+  //     const fakeInfo = {  
   //       student_id: "2021102614",
   //       student_name: "Test Student",
   //       program: "Bachelor of Science in Computer Engineering",

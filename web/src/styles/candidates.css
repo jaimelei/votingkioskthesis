@@ -19,7 +19,6 @@
   font-style: normal;
 }
 
-@media screen and (min-width: 1401px) {
 /* 🔹 Candidates Layout */
 .candidates-container {
   display: flex;
@@ -27,7 +26,7 @@
 }
 
 .candidates-sidebar {
-  background-color: #4f4b23;
+  background-color: #0b5227;
   color: white;
   padding: 20px;
   width: 310px;
@@ -60,8 +59,9 @@
 
 .candidates-menu-item:hover,
 .candidates-active-tab {
-  background-color: #706f3d;
+  background-color: white;
   border-radius: 5px;
+  color: black;
 }
 
 /* 🔹 Board Members Dropdown (PC) */
@@ -89,7 +89,7 @@
 }
 
 .board-members-dropdown li:hover {
-  background-color: #5a5730;
+  background-color: white;
 }
 
 /* 🔹 Mobile Popup */
@@ -132,14 +132,14 @@
 }
 
 .board-members-popup li:hover {
-  background-color: #706f3d;
-  color: white;
+  background-color: white;
+  color: black;
 }
 
 /* 🔹 Candidates Content */
 .candidates-content {
   flex: 1;
-  background-color: #8d8753;
+  background-color: #dbd7cd;
   padding: 30px;
   overflow-y: auto;
 }
@@ -163,7 +163,7 @@
 
 /* 🔹 Candidate Card */
 .render-candidate-card {
-  background-color: #F2DD6C;
+  background-color: #9b9a94;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
@@ -171,7 +171,6 @@
   text-align: center;
   width: 27rem;
   overflow-y: auto;
-  max-height: 700px;
 }
 
 .candidate-photo {
@@ -244,7 +243,6 @@
   font-weight: 400;
   text-align: center;
 }
-}
 
 @media screen and (min-width: 1201px) and (max-width:1400px) {
 /* 🔹 Candidates Layout */
@@ -254,7 +252,7 @@
 }
 
 .candidates-sidebar {
-  background-color: #4f4b23;
+  background-color: #0b5227;
   color: white;
   padding: 10px;
   width: 260px;
@@ -287,8 +285,9 @@
 
 .candidates-menu-item:hover,
 .candidates-active-tab {
-  background-color: #706f3d;
+  background-color: #ffffff;
   border-radius: 5px;
+  color: black;
 }
 
 /* 🔹 Board Members Dropdown (PC) */
@@ -366,7 +365,7 @@
 /* 🔹 Candidates Content */
 .candidates-content {
   flex: 1;
-  background-color: #8d8753;
+  background-color: #dbd7cd;
   padding: 5px 30px 30px 30px;
   overflow-y: auto;
 }
@@ -390,7 +389,7 @@
 
 /* 🔹 Candidate Card */
 .render-candidate-card {
-  background-color: #F2DD6C;
+  background-color: #9b9a94;
   padding: 10px;
   border-radius: 10px;
   box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
@@ -552,5 +551,11 @@
   .view-toggle-buttons button {
       font-size: 14px;
       padding: 8px 16px;
+  }
+
+    .candidates-active-tab {
+    background: white;
+    font-weight: bold;
+    padding-bottom: 0;
   }
 }

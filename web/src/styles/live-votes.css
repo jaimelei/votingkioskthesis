@@ -1,4 +1,3 @@
-@media screen and (min-width: 1401px) {
 /* ===== General Layout ===== */
 .livevotes-container {
   display: flex;
@@ -8,7 +7,7 @@
 
 /* ===== Sidebar Styles ===== */
 .livevotes-sidebar {
-    background-color: #4f4b23;
+    background-color: #0b5227;
     color: white;
     padding: 20px;
     width: 290px;
@@ -39,8 +38,9 @@
   }
 
   .livevotes-menu-item:hover {
-    background-color: #706f3d;
+    background-color: white;
     border-radius: 5px;
+    color: black;
   }
 
   .livevotes-menu-item-open {
@@ -55,8 +55,9 @@
   }
 
   .livevotes-active-tab {
-    background: #706f3d;
+    background: white;
     font-weight: bold;
+    color: black;
   }
 
   .livevotes-dropdown {
@@ -66,7 +67,7 @@
 
 /* ===== Main Content ===== */
 .livevotes-content {
-    background-color: #8d8753;
+    background-color: #dbd7cd;
   flex: 1;
   padding: 20px;
   display: flex;
@@ -86,12 +87,12 @@
 .view-toggle-buttons {
   display: flex;
   gap: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 .view-toggle-buttons button {
   padding: 10px 15px;
-  font-size: 14px;
+  font-size: 17px;
   border: none;
   background: #dcdcdc;
   color: #333;
@@ -114,7 +115,7 @@
 
 /* ===== Graphs ===== */
 .graph-container {
-    background-color: #F2DD6C;
+    background-color: #9b9a94;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -173,8 +174,8 @@
 
 .candidate-name {
   font-weight: 400;
-  margin-top: 3px;
-  font-size: 1rem;
+  margin-top: 8px;
+  font-size: 1.2em;
   font-family: Montserrat;
 }
 
@@ -185,7 +186,6 @@
   border: 1px solid #ccc;
   border-radius: 4px;
   margin-bottom: 10px;
-}
 }
 
 @media screen and (min-width: 1201px) and (max-width:1400px) {
@@ -198,7 +198,7 @@
 
 /* ===== Sidebar Styles ===== */
 .livevotes-sidebar {
-    background-color: #4f4b23;
+    background-color: #0b5227;
     color: white;
     padding: 20px;
     width: 250px;
@@ -229,7 +229,7 @@
   }
 
   .livevotes-menu-item:hover {
-    background-color: #706f3d;
+    background-color: white;
     border-radius: 5px;
   }
 
@@ -245,8 +245,9 @@
   }
 
   .livevotes-active-tab {
-    background: #706f3d;
+    background: white;
     font-weight: bold;
+    color: black;
   }
 
   .livevotes-dropdown {
@@ -256,7 +257,7 @@
 
 /* ===== Main Content ===== */
 .livevotes-content {
-    background-color: #8d8753;
+    background-color: #dbd7cd;
   flex: 1;
   padding: 20px;
   display: flex;
@@ -304,7 +305,7 @@
 
 /* ===== Graphs ===== */
 .graph-container {
-    background-color: #F2DD6C;
+    background-color: #9b9a94;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -415,14 +416,14 @@
   .livevotes-sidebar-menu {
     display: flex;
     flex-wrap: nowrap;
-    gap: 10px; /* Space between items */
+    gap: 10px;
     margin: 0;
     padding: 0 15px;
     width: max-content;
 }
 
 .livevotes-menu-item {
-  flex-shrink: 0; /* Prevents shrinking */
+  flex-shrink: 0;
   font-size: 0.9rem;
   padding: 8px 3px;
   text-align: center;
@@ -433,13 +434,12 @@
   .livevotes-menu-item-open {
     font-size: 1rem;
     padding: 5px 15px;
-    flex-shrink: 0; /* Prevents items from shrinking */
+    flex-shrink: 0;
   }
 
-  /* Content adapts to the new layout */
   .livevotes-content {
     padding-top: 10px;
-    padding-bottom: 190px; /* Extra padding to prevent overlap with the bottom sidebar */
+    padding-bottom: 190px
   }
 
   .livevotes-content-title {
@@ -501,7 +501,7 @@ max-width: 90%;
   }
 
   .livevotes-active-tab {
-    background: #706f3d;
+    background: white;
     font-weight: bold;
     padding-bottom: 0;
   }

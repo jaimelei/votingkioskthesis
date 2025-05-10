@@ -61,7 +61,7 @@ const LiveVotes = () => {
 
     Promise.all(
       positionNames.map((posName) =>
-        fetch(`${HARDWARE_API}/voting-api/get-total-votes.php?position_name=${encodeURIComponent(posName)}`, { //changed
+        fetch(`${API_URL}/api/get-total-votes/${posName}`, {
           method: "GET",
           headers: {"Ngrok-Skip-Browser-Warning": "true",}
         })
@@ -86,7 +86,7 @@ const LiveVotes = () => {
     Promise.all(
       positionNames.flatMap((posName) =>
         departmentKeys.map((dept) =>
-          fetch(`${HARDWARE_API}/voting-api/get-department-votes.php?position_name=${encodeURIComponent(posName)}&department=${encodeURIComponent(dept)}`, { //changed
+          fetch(`${API_URL}/api/get-department-votes/${posName}/${dept}`, {
             method: "GET",
             headers: {"Ngrok-Skip-Browser-Warning": "true",}
           })

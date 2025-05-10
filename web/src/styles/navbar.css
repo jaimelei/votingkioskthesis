@@ -26,11 +26,11 @@
     gap: 20px;
 }
 
-.logo-placeholder {
-    font-weight: bold;
-    font-size: 18px;
-    color: white;
-    margin-right: 10px;
+.logo-placeholder img {
+    height:40px;
+    width: auto;
+    display: block;
+    margin-right: 30px;
 }
 
 .nav-link {
@@ -313,4 +313,10 @@
         transition: none; /* Prevent hover effects */
     }
     
+    .logo-placeholder img {
+    height: 40px;
+    width: auto;
+    display: block;
+    margin: 0;
+    }
 }

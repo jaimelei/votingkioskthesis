@@ -29,7 +29,7 @@ body, html {
     display: flex;
     flex-direction: column;
     padding-left: 110px;
-    background: linear-gradient(135deg, #125b0c, #727911);
+    background: #0b5227;
     color: white;
 }
 
@@ -101,7 +101,7 @@ body, html {
 }
 
 .login-style button {
-    background: linear-gradient(135deg, #137d0d, #afba17);
+    background: #0b5227;
     align-self: center;
     color: white;
     border: none;
@@ -160,7 +160,7 @@ body, html {
         display: flex;
         flex-direction: column;
         padding-left: 110px;
-        background: linear-gradient(135deg, #125b0c, #727911);
+        background: #0b5227;
         color: white;
     }
     
@@ -230,7 +230,7 @@ body, html {
     }
     
     .login-style button {
-        background: linear-gradient(135deg, #137d0d, #afba17);
+        background: #0b5227;
         align-self: center;
         color: white;
         border: none;

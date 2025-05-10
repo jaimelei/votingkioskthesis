@@ -31,7 +31,11 @@ function Navbar() {
     return (
         <nav className="navbar">
             <div className="navbar-left">
-                <div className="logo-placeholder">LOGO</div>
+            <div className="logo-placeholder">
+                <Link to="/">
+                    <img src="/images/logo.png" alt="Logo" />
+                </Link>
+                </div>
 
                 {/* Hamburger Menu Button for Mobile */}
                 <div className="hamburger" onClick={toggleMenu}>

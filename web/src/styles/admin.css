@@ -25,7 +25,7 @@
 }
 
 .sidebar {
-background-color: #4f4b23;
+background-color: #0b5227;
 color: #ffffff;
 width: 20%;
 padding: 0 20px 20px 20px;
@@ -56,17 +56,19 @@ transition: background-color 0.3s ease;
 }
 
 .sidebar nav li:hover {
-background-color: #706f3d;
+background-color: white;
+color: black;
 }
 
 .sidebar nav li.active {
-background-color: #706f3d;
+background-color: white;
 font-weight: bold;
+color:black
 }
 
 .content {
 flex-grow: 1;
-background-color: #8d8753;
+background-color: #dbd7cd;
 padding: 50px 70px;
 overflow-y: auto;
 max-height: 100vh;
@@ -80,7 +82,7 @@ font-weight: bold;
 }
 
 .feature {
-    background-color: #F2DD6C;
+    background-color: #9b9a94;
     border-radius: 20px;
     margin-bottom: 50px;
     padding-bottom: 5px;
@@ -111,7 +113,7 @@ font-weight: bold;
 .custom-tooltip .tooltip-content {
     visibility: hidden;
     width: 300px;
-    background-color: #4f4b23;
+    background-color: #0b5227;
     color: #ffffff;
     text-align: center;
     border-radius: 10px;
@@ -303,7 +305,7 @@ margin-right: 40px;
     }
     
     .sidebar {
-    background-color: #4f4b23;
+    background-color: #0b5227;
     color: #ffffff;
     width: 19%;
     padding: 0 20px 20px 20px;
@@ -334,17 +336,19 @@ margin-right: 40px;
     }
     
     .sidebar nav li:hover {
-    background-color: #706f3d;
+    background-color: white;
+    color: black;
     }
     
     .sidebar nav li.active {
-    background-color: #706f3d;
-    font-weight: bold;
+        background-color: white;
+        font-weight: bold;
+        color:black
     }
     
     .content {
     flex-grow: 1;
-    background-color: #8d8753;
+    background-color: #dbd7cd;
     padding: 30px 70px;
     overflow-y: auto;
     max-height: 100vh;
@@ -358,7 +362,7 @@ margin-right: 40px;
     }
     
     .feature {
-        background-color: #F2DD6C;
+        background-color: #9b9a94;
         border-radius: 20px;
         margin-bottom: 30px;
         padding-bottom: 5px;
@@ -389,7 +393,7 @@ margin-right: 40px;
     .custom-tooltip .tooltip-content {
         visibility: hidden;
         width: 200px;
-        background-color: #4f4b23;
+        background-color: #0b5227;
         color: #ffffff;
         text-align: center;
         border-radius: 10px;
