@@ -22,29 +22,6 @@ const fetchCandidates = async () => {
   }
 };
 
-const fetchVoterInfo = async (studentId) => {
-  try {
-      const response = await fetch(`${API_URL}/api/get-voter/${studentId}`, {
-        method: "GET",
-        headers: {"Ngrok-Skip-Browser-Warning": "true",}
-      });
-      
-      const data = await response.json();
-
-        if (data.error) {
-            throw new Error(data.error);  // This handles "Voter not found" or other errors returned by the backend.
-        }
-
-        if (parseInt(data.has_voted) === 1) {
-          throw new Error("Student has already voted.");
-        }
-
-      return data;
-  } catch (error) {
-      throw error;
-  }
-};
-
 const ElectionBanner = ({ onVote }) => (
   <div className="container">
     <div className="floating-box">
@@ -205,24 +182,21 @@ function Voting() {
       .catch(() => setPage("inactive"));
   }, []);
 
+  const handleStudentIDSubmit = (id, info) => {
+    setStudentID(id);
+    setVoterInfo(info);
+    setPage("scan");
+  };
+
   // Handle Scan directly without fetching again
   const handleScan = (infoFromScan) => {
     if (infoFromScan.has_voted) {
       alert("You have already voted.");
-      setPage("scan");
-    } else {  
+      setPage("home");
+    } else {
       setStudentInfo(infoFromScan);
-      fetchVoterInfo(infoFromScan.student_id)
-      .then((voterData) => {
-        // Do something with voterData if needed
-        setVoterInfo(voterData);
-        setPage("governor");
-      })
-      .catch((error) => {
-        console.error(error);
-        alert(error.message || "Failed to fetch voter info.");
-        setPage("scan"); // optional: go back if there's an error
-      });
+      setVoterInfo(infoFromScan);
+      setPage("governor");
     }
   };
 
@@ -269,31 +243,27 @@ function Voting() {
     };
 
     try {
-      console.log("Submitting payload:", payload);
-
       const response = await fetch(`${API_URL}/api/post-vote`, {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json',
-              "Ngrok-Skip-Browser-Warning": "true"
-          },
-          body: JSON.stringify(payload),
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            "Ngrok-Skip-Browser-Warning": "true"
+        },
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) {
-          const errorData = await response.json();
-          alert(`Failed to submit votes: ${errorData.error}`);
-          return;
+        const errorData = await response.json();
+        alert(`Failed to submit votes: ${errorData.error}`);
+        return;
       }
-
-      alert('Votes successfully submitted!');
-      } catch (error) {
-          console.error('Error submitting votes:', error);
-          alert('An error occurred while submitting votes.');
-      } finally {
-        setShowPopup(false);
-        setPage("completed");
-      }
+    } catch (error) {
+      console.error('Error submitting votes:', error);
+      alert('An error occurred while submitting votes.');
+    } finally {
+      setShowPopup(false);
+      setPage("completed");
+    }
   };
 
   if (isLoading) {
@@ -315,7 +285,7 @@ function Voting() {
 
   return (
     <div className="app-container white-background">
-      {page === "home" && <ElectionBanner onVote={() => setPage("governor")} />}
+      {page === "home" && <ElectionBanner onVote={() => setPage("qr-scan")} />}
       {page === "qr-scan" && <ScanPage onScan={handleScan} onBack={() => setPage("governor")} />}
       {page === "governor" && (
         <VotingPage

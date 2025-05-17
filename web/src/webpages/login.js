@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/login.css";
+import ResetPasswordModal from "../components/reset-password.js";
 
 function Login() {
     const [isMobile, setIsMobile] = useState(false);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const [showResetModal, setShowResetModal] = useState(false);
     const navigate = useNavigate();
 
     const API_URL = process.env.REACT_APP_API_URL || "http://localhost:9000";
@@ -89,13 +91,24 @@ function Login() {
                             onChange={(e) => setPassword(e.target.value)} 
                             required 
                         />
-
+                        <button
+                            type="button"
+                            className="reset-password-button"
+                            onClick={() => setShowResetModal(true)}
+                        >
+                            Reset Password
+                        </button>
                         {error && <p className="error">{error}</p>}
 
-                        <button type="submit">Login</button>
+                        <button type="submit" className="signin-submit-button">Login</button>
                     </form>
                 </div>
             </div>
+
+            <ResetPasswordModal 
+                showModal={showResetModal} 
+                setShowModal={setShowResetModal} 
+            />
         </div>
     );
 }

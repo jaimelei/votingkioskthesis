@@ -100,7 +100,7 @@ body, html {
     margin-bottom: 10px;
 }
 
-.login-style button {
+.signin-submit-button {
     background: #0b5227;
     align-self: center;
     color: white;
@@ -112,6 +112,20 @@ body, html {
     transition: 0.3s ease-in-out;
     width: 200px;
     margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.reset-password-button {
+    align-self: center;
+    background: none;
+    color: rgb(0, 0, 0);
+    border: none;
+    padding: 0;
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    width: 200px;
+    margin-top: 5px;
     margin-bottom: 20px;
 }
 
