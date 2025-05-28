@@ -36,6 +36,7 @@ func init() {
 	revel.InterceptMethod((*controllers.LiveVotesController).SetDB, revel.BEFORE)
 	revel.InterceptMethod((*controllers.SigninController).SetDB, revel.BEFORE)
 	revel.InterceptMethod((*controllers.VotingController).SetDB, revel.BEFORE)
+	revel.InterceptMethod((*controllers.RegistrationController).SetDB, revel.BEFORE)
 }
 
 // HeaderFilter adds common security headers
@@ -50,7 +51,8 @@ var HeaderFilter = func(c *revel.Controller, fc []revel.Filter) {
 
 // CORSFilter handles Cross-Origin Resource Sharing (CORS)
 var CORSFilter = func(c *revel.Controller, fc []revel.Filter) {
-	c.Response.Out.Header().Add("Access-Control-Allow-Origin", "*")
+	//c.Response.Out.Header().Add("Access-Control-Allow-Origin", "*")
+	c.Response.Out.Header().Add("Access-Control-Allow-Origin", "https://votingkioskthesis.vercel.app")
 	c.Response.Out.Header().Add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
 	c.Response.Out.Header().Add("Access-Control-Allow-Headers", "Origin, Content-Type, Accept, Authorization, Ngrok-Skip-Browser-Warning")
 	c.Response.Out.Header().Add("Access-Control-Allow-Credentials", "true")

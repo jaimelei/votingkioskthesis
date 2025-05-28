@@ -290,7 +290,7 @@ function Admin() {
             departmentKeys.map((dept) =>
               fetchWithAuth(`${API_URL}/api/get-department-votes/${candidate.position_name}/${dept}`, {
                 method: "GET",
-                headers: { "Content-Type": "application/json" },
+                headers: { "Content-Type": "application/json", "Ngrok-Skip-Browser-Warning": "true" },
               })
                 .then((res) => res.json())
                 .then((data) => ({ [dept]: data.total_votes || 0 }))

@@ -30,16 +30,8 @@ GET     /public/*filepath                       Static.Serve("public")
 GET /backup/*filepath Static.Serve("backup")
 
 # API Routes
-GET         /api/get-total-votes/:position_name                             LiveVotesController.GetTotalVotes
-GET         /api/get-department-votes/:position_name/:department            LiveVotesController.GetDepartmentVotes
-GET         /api/get-all-candidates                                         CandidatesController.GetAllCandidates
-GET         /api/first-password                                             AdminController.FirstPassword
-GET         /api/get-election-status                                        VotingController.GetElectionStatus
-GET         /api/get-backup-list                                            AdminController.GetBackupList
-GET         /api/get-voter/:student_id                                      VotingController.GetVoter
-GET         /api/get-votes-tally                                            AdminController.GetVotesTally
-
 POST        /api/post-vote                                                  VotingController.PostVote
+POST        /api/qr-api                                                     RegistrationController.RegisterQr
 POST        /api/post-voting-timeframe                                      AdminController.PostVotingTimeframe
 POST        /api/change-password                                            AdminController.ChangePassword
 POST        /api/signin                                                     SigninController.SignIn
@@ -49,5 +41,14 @@ POST        /api/post-credentials                                           Admi
 POST        /api/generate-backup                                            AdminController.GenerateBackup
 POST        /api/update-candidate                                           AdminController.UpdateCandidate
 POST        /api/update-credentials                                         AdminController.UpdateCredentials
+
+GET         /api/get-total-votes/:position_name                             LiveVotesController.GetTotalVotes
+GET         /api/get-department-votes/:position_name/:department            LiveVotesController.GetDepartmentVotes
+GET         /api/get-all-candidates                                         CandidatesController.GetAllCandidates
+GET         /api/first-password                                             AdminController.FirstPassword
+GET         /api/get-election-status                                        VotingController.GetElectionStatus
+GET         /api/get-backup-list                                            AdminController.GetBackupList
+GET         /api/get-voter/:student_id                                      VotingController.GetVoter
+GET         /api/get-votes-tally                                            AdminController.GetVotesTally
 
 DELETE      /api/reset-elections                                            AdminController.ResetElections
