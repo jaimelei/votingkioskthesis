@@ -240,7 +240,7 @@ function Admin() {
       // Fetch all positions and candidates
       const candidatesResponse = await fetchWithAuth(`${API_URL}/api/get-all-candidates`, {
         method: "GET",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "Ngrok-Skip-Browser-Warning": "true" },
       });
   
       if (!candidatesResponse.ok) {
@@ -275,7 +275,7 @@ function Admin() {
         const totalVotesPromises = positionCandidates.map((candidate) =>
           fetchWithAuth(`${API_URL}/api/get-total-votes/${candidate.position_name}`, {
             method: "GET",
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json", "Ngrok-Skip-Browser-Warning": "true" },
           })
             .then((res) => res.json())
             .then((data) => ({ name: candidate.name, total: data.total_votes || 0 }))
